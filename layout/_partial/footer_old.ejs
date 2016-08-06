@@ -1,0 +1,35 @@
+<div class="copyright">
+<font id="counter">
+	本站总访问量 <font id="counterValue" style="color:white">&nbsp;&nbsp;&nbsp;&nbsp;</font> 次 &nbsp;|&nbsp;
+</font>
+  <% if (config.author){ %>
+  &copy; <%= new Date().getFullYear() %> <a href="<%- config.root %>"><%= config.author %></a>
+  <% } else { %>
+  &copy; <%= new Date().getFullYear() %> <a href="<%- config.root %>"><%= config.title %></a>
+  <% } %>
+</div>
+<div class="theme-copyright">
+  Theme by <a href="http://heroicyang.com" target="_blank">Heroic Yang</a>
+   | 
+  Redesign by <a href="http://bruce-sha.github.io" target="_blank">Bruce Sha</a>
+</div>
+<div class="clearfix"></div>
+
+<div>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type     : "GET",
+		url      : 'http://lbservice.duapp.com/counter',
+		dataType : "jsonp",
+		jsonp    : "jsonpCallback",
+		success  : function(data) {
+	        	    $("#counterValue").text(data);
+	               },
+		error    : function() { 
+				    $("#counter").html(""); 
+			       }
+	});
+});
+</script>
+</div>

@@ -1,0 +1,29 @@
+menu:
+#  Home: /
+  Archives: /archives
+  Reading: /reading
+  About: /about
+#  Guestbook: /about
+
+excerpt_link: Read More
+archive_yearly: true
+
+widgets:
+  - category
+#  - tag
+  - tagcloud
+  - recent_posts
+#  - blogroll
+
+blogrolls:
+  - bruce sha's hexo blog: http://ibruce.info
+  - bruce sha's busuanzi service: http://busuanzi.ibruce.info
+
+fancybox: true
+
+duoshuo_shortname: buru
+
+google_analytics: true
+baidu_tongji: true
+
+rss: /atom.xml

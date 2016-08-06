@@ -1,0 +1,22 @@
+<% if (site.tags.length){ %>
+<%
+  var extraClass = '';
+  if (idx.current % 3 === 0) {
+    extraClass += ' first';
+    if (idx.current >= 3) {
+      extraClass += ' newline';
+    }
+  }
+%>
+<div class="widget tagcloud<%= extraClass %>">
+  <h3 class="title"><%= __('tagcloud') %></h3>
+  <div class="entry">
+  <!-- 
+  <%- tagcloud(site.tags, {}) %>
+  -->
+  <%- tagcloud(site.tags.sort('posts.length',-1).limit(50), {}) %>
+  </div>
+</div>
+<% } else {
+  idx.current -= 1
+} %>

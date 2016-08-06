@@ -1,0 +1,62 @@
+<%
+var title = '';
+var years = [];
+if (page.category) title = page.category;
+if (page.tag) title = page.tag;
+if (page.archive){
+  if (page.year) {
+    title = page.year + (page.month ? '/' + page.month : '');
+  } else {
+    title = __('archive_a');
+
+    if (theme.archive_yearly) {
+      /* 年变量在下面使用，提出 */
+      var page_grouped = {} /*, years = []*/;
+      page.posts.each(function (item) {
+        var year = item.date.format('YYYY');
+        if (!page_grouped[year]) {
+          page_grouped[year] = [];
+          years.push(year);
+        }
+        page_grouped[year].push(item);
+      });
+      years.sort(function (a,b) { return b- a; } );
+    }
+  }
+}
+%>
+<h2 class="archive-title<% if (page.tag){ %> tag<% } else if (page.category){ %> category<% } %>"><%= title %></h2>
+
+<% if (pagination == 2){ %>
+  <% page.posts.each(function(item){ %>
+    <%- partial('article', {item: item, index: true}) %>
+  <% }); %>
+  <%- partial('pagination') %>
+<% } else { %>
+  <div class="archive">
+    <% if (page.year || !theme.archive_yearly) { %>
+      <% page.posts.each(function(item){ %>
+        <%- partial('archive_title', {item: item}) %>  
+      <% }); %>
+      <%- partial('pagination') %>
+    <% } else { %>
+      <% for (var i = 0, len = years.length; i < len; i++) { %>
+        <div class="archive-year">
+          <a href="/archives/<%= years[i] %>/"><%= years[i] %></a>
+          <div class="sep"></div>
+        </div>
+        <% page_grouped[years[i]].forEach(function(item){ %>
+          <%- partial('archive_title', {item: item}) %>
+        <% }); %>
+      <% } %>
+      <!-- tag和categories无内容 -->
+      <% if (!page.archive){ %>
+        <% page.posts.each(function(item){ %>
+          <%- partial('archive_title', {item: item}) %>
+        <% }); %>
+      <% } %>
+      <%- partial('pagination') %>
+      <!-- tag和categories无内容 -->
+    <% } %>
+  </div>
+<% } %>
